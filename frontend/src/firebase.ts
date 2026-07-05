@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // ¡Esto faltaba!
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBctHCJ24N-W3r3W-0PqKe4HgIFsPm063Q",
+  apiKey: "AIzaSyBcTHCJ24N-W3r3W-0PqKe4HgIFsPmO63Q",
   authDomain: "serviteca-vj.firebaseapp.com",
   projectId: "serviteca-vj",
   storageBucket: "serviteca-vj.firebasestorage.app",
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const analytics = getAnalytics(app);
 
-// ¡Esta línea es la que hace que tu aplicación deje de fallar!
+// ¡Esta es la línea vital que hace que se conecte a tu inventario!
 export const db = getFirestore(app);
