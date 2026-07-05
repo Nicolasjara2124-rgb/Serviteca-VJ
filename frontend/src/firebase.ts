@@ -1,20 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore"; // ¡Esto faltaba!
+import { getAnalytics } from "firebase/analytics";
 
-// Tus llaves de conexión a NEUMATICOS VJ
 const firebaseConfig = {
-  apiKey: "AIzaSyAf5ZDCPfN-tqjgWhFV3sGmLuzf7vk5McI",
-  authDomain: "neumaticos-vj.firebaseapp.com",
-  databaseURL: "https://neumaticos-vj-default-rtdb.firebaseio.com",
-  projectId: "neumaticos-vj",
-  storageBucket: "neumaticos-vj.firebasestorage.app",
-  messagingSenderId: "1094394431570",
-  appId: "1:1094394431570:web:09fd91c4825576d90cf78b",
-  measurementId: "G-WPMSMVYDR8"
+  apiKey: "AIzaSyBctHCJ24N-W3r3W-0PqKe4HgIFsPm063Q",
+  authDomain: "serviteca-vj.firebaseapp.com",
+  projectId: "serviteca-vj",
+  storageBucket: "serviteca-vj.firebasestorage.app",
+  messagingSenderId: "349430767084",
+  appId: "1:349430767084:web:4ead2192211889fb0834c9",
+  measurementId: "G-Y5KJSM5FVG"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-// Exportar la base de datos para usarla en el resto del sistema
+// ¡Esta línea es la que hace que tu aplicación deje de fallar!
 export const db = getFirestore(app);

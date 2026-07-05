@@ -626,7 +626,7 @@ className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded t
 </div>
 <div className="flex-1 overflow-y-auto grid grid-cols-2 gap-2 pr-1 pb-2">
 {productosFiltrados.map(prod => {
-const stock = prod.stockPorSucursal[sucursalSeleccionadaId] ?? 0;
+const stock = prod.stockPorSucursal?.[sucursalSeleccionadaId] ?? 0;
 const esServicio = prod.categoria === 'Servicios';
 const sinStock = !esServicio && stock <= 0;
 

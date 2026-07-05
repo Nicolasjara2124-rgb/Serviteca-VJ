@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import VentasOnline from './VentasOnline';
 import { useState, useEffect } from 'react';
 import type { Usuario, Producto, Sucursal, Venta, TransferenciaStock } from './types';
 import { 

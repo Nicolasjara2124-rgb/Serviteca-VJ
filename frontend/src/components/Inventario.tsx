@@ -7,7 +7,6 @@ import React, { useState, useMemo } from 'react';
 import type { Producto, Sucursal, Usuario, TransferenciaStock } from '../types';
 import { 
   Search, 
-  Plus, 
   ArrowRightLeft, 
   AlertTriangle, 
   SlidersHorizontal,
@@ -79,17 +78,26 @@ export default function Inventario({
   const esAdmin = usuario.rol === 'Administrador' || usuario.rol === 'Supervisor';
 
   // 1. Filtrado de productos
+ // 1. Filtrado de productos - CORREGIDO
   const productosFiltrados = useMemo(() => {
+    // Si productos no existe o está vacío, devolvemos un array vacío para no romper nada
+    if (!productos || !Array.isArray(productos)) return [];
+    
     return productos.filter(p => {
-      const coincideBusqueda = p.nombre.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                               p.codigo.includes(searchQuery);
+      // Validamos que 'p' exista antes de acceder a sus propiedades
+      if (!p) return false;
+      
+      const coincideBusqueda = p.nombre?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              p.codigo?.includes(searchQuery);
       
       const coincideCategoria = selectedCategory === 'todos' || p.categoria === selectedCategory;
       
-      // Alerta de stock bajo en cualquier sucursal
-      const stockBajo = filterLowStock ? 
-        (p.categoria !== 'Servicios' && sucursales.some(s => (p.stockPorSucursal[s.id] ?? 0) <= p.minStock)) : 
-        true;
+      // Alerta de stock seguro
+      let stockBajo = true;
+      if (filterLowStock) {
+        stockBajo = p.categoria !== 'Servicios' && 
+                    sucursales.some(s => (p.stockPorSucursal?.[s.id] ?? 0) <= p.minStock);
+      }
 
       return coincideBusqueda && coincideCategoria && stockBajo;
     });
@@ -385,9 +393,9 @@ export default function Inventario({
                         ) : (
                           <div className="flex justify-center gap-3">
                             {sucursales.map(s => {
-                              const stock = prod.stockPorSucursal[s.id] ?? 0;
-                              const bajoStock = stock <= prod.minStock;
-                              const nombreCorto = s.nombre.replace('Serviteca VJ - ', '').split(' ')[0];
+   const stock = prod.stockPorSucursal?.[s.id] ?? 0;
+const bajoStock = stock <= (prod.minStock ?? 0);
+const nombreCorto = s.nombre ? s.nombre.replace('Serviteca VJ - ', '').split(' ')[0] : 'Suc';
 
                               return (
                                 <div 
